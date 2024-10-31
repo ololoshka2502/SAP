@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="AP1" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="AP1"/>
+    <securedModels>
+      <modelUri>FlightReservation</modelUri>
+    </securedModels>
+<whereSql>&quot;PASSENGERID&quot; in (select &quot;PASSENGERID&quot; from &quot;PASSENGERS&quot; where &quot;NAME&quot;=session_user)</whereSql>
+</Privilege:analyticPrivilege>

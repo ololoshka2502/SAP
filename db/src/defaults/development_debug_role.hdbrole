@@ -1,0 +1,13 @@
+{
+  "role": {
+    "name": "development_debug_role",
+    "schema_analytic_privileges": [
+      {
+        "privileges": [
+          "AP1",
+          "APX"
+        ]
+      }
+    ]
+  }
+}

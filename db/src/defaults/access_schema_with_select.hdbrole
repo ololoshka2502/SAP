@@ -1,0 +1,12 @@
+{
+  "role": {
+    "name": "ROLE_SELECT",
+    "schema_privileges": [
+      {
+        "privileges": [
+          "SELECT"
+        ]
+      }
+    ]
+  }
+}

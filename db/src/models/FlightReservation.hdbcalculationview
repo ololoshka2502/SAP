@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="FlightReservation" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" application="BAS">
+<descriptions defaultDescription="FlightReservation"/>
+<localVariables>
+  <variable id="XS_APPLICATIONUSER" type="session"/>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="PASSENGERS">
+    <resourceUri>PASSENGERS</resourceUri>
+  </DataSource>
+  <DataSource id="FLIGHTRESERVATION">
+    <resourceUri>FLIGHTRESERVATION</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Reservations" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PASSENGERID"/>
+      <viewAttribute id="PASSENGERPRIORITYSTATUS"/>
+      <viewAttribute id="RESERVATIONID"/>
+      <viewAttribute id="SEAT"/>
+
+      <viewAttribute id="CARRID"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PASSENGERID$PASSENGERID"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Airline" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>CASE &quot;CARRID&quot; WHEN 'LH' THEN 'Lufthansa' WHEN 'SQ' THEN 'Singapore Airlines' END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="PASSENGERS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PASSENGERID" source="PASSENGERID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PASSENGERPRIORITYSTATUS" source="PASSENGERPRIORITYSTATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PASSENGERID$PASSENGERID" source="PASSENGERID"/>
+    </input>
+    <input node="FLIGHTRESERVATION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RESERVATIONID" source="RESERVATIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEAT" source="SEAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CARRID" source="CARRID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PASSENGERID$PASSENGERID" source="PASSENGERID"/>
+    </input>
+    <joinAttribute name="JOIN$PASSENGERID$PASSENGERID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Reservations">
+  <attributes>
+    <attribute id="PASSENGERID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PASSENGERID"/>
+      <keyMapping columnObjectName="Reservations" columnName="PASSENGERID"/>
+    </attribute>
+    <attribute id="PASSENGERPRIORITYSTATUS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PASSENGERPRIORITYSTATUS"/>
+      <keyMapping columnObjectName="Reservations" columnName="PASSENGERPRIORITYSTATUS"/>
+    </attribute>
+    <attribute id="RESERVATIONID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RESERVATIONID"/>
+      <keyMapping columnObjectName="Reservations" columnName="RESERVATIONID"/>
+    </attribute>
+    <attribute id="SEAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEAT"/>
+      <keyMapping columnObjectName="Reservations" columnName="SEAT"/>
+    </attribute>
+
+    <attribute id="CARRID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CARRID"/>
+
+      <keyMapping columnObjectName="Reservations" columnName="CARRID"/>
+
+    </attribute>
+    <attribute id="Airline" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Airline"/>
+      <keyMapping columnObjectName="Reservations" columnName="Airline"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+
+      <rectangleSize width="160"/>
+    </shape>
+
+    <shape expanded="false" modelObjectName="Reservations" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="197"/>
+    </shape>
+    <shape modelObjectName="PASSENGERS" modelObjectNameSpace="Reservations" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="247"/>
+    </shape>
+    <shape modelObjectName="FLIGHTRESERVATION" modelObjectNameSpace="Reservations" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="192"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

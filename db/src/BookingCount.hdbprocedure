@@ -1,0 +1,19 @@
+PROCEDURE "BookingCount"(
+ OUT BOOKING_COUNT INTEGER,
+ IN PASSENGER_ID INTEGER
+)
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER
+--DEFAULT SCHEMA <default_schema_name>
+READS SQL DATA AS
+BEGIN
+  /*************************************
+   Write your procedure logic
+  *************************************/
+  SELECT
+    COUNT(*) INTO BOOKING_COUNT
+  FROM
+    "FLIGHTRESERVATION"
+  WHERE
+    "PASSENGERID" = PASSENGER_ID;
+END 
